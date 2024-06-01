@@ -18,3 +18,4 @@ jobs:
     - run: 'systemd-analyze'
     - run: 'systemd-analyze blame'
     - run: 'systemd-analyze critical-chain'
+    - run: 'dmesg | grep Run'
