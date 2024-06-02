@@ -15,3 +15,5 @@ jobs:
         python-version: '3.11.4'
     - run: 'pip install pre-commit'
     - run: 'pre-commit run --all'
+    - run: './build_kernel.sh'
+    - run: './build_system.sh'
