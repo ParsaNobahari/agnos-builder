@@ -15,7 +15,3 @@ jobs:
         python-version: '3.11.4'
     - run: 'pip install pre-commit'
     - run: 'pre-commit run --all'
-    - run: 'systemd-analyze'
-    - run: 'systemd-analyze blame'
-    - run: 'systemd-analyze critical-chain'
-    - run: 'sudo dmesg | grep Run'
