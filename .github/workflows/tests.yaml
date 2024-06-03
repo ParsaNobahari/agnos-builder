@@ -7,7 +7,7 @@ jobs:
   precommit:
     name: pre-commit
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 50
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v4
@@ -19,4 +19,4 @@ jobs:
     - run: './tools/extract_tools.sh'
     - run: 'chmod u+x setup_python27.sh && sudo ./setup_python27.sh'
     - run: './build_kernel.sh'
-    - run: './build_system.sh'
+    - run: 'sudo ./build_system.sh'
