@@ -14,6 +14,6 @@ update-alternatives --install /usr/bin/python python /usr/bin/python2.6 20
 update-alternatives --install /usr/bin/python python /usr/bin/python2.7 10
 update-alternatives --set python /usr/bin/python2.6
 
-wget http://peak.telecommunity.com/dist/ez_setup.py
+wget --ca-certificate=/etc/ssl/certs/ca-certificates.crt http://peak.telecommunity.com/dist/ez_setup.py
 python2.7 ez_setup.py
 easy_install-2.7 virtualenv
