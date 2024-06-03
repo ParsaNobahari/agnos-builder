@@ -16,6 +16,7 @@ jobs:
     - run: 'pip install pre-commit'
     - run: 'pre-commit run --all'
     - run: 'git submodule update --init agnos-kernel-sdm845'
+    - run: './setup_python27.sh'
     - run: './tools/extract_tools.sh'
     - run: './build_kernel.sh'
     - run: './build_system.sh'
