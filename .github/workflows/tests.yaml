@@ -7,16 +7,16 @@ jobs:
   precommit:
     name: pre-commit
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 20
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v4
       with:
         python-version: '3.11.4'
-    - run: 'chmod u+x setup_python27.sh && sudo ./setup_python27.sh'
     - run: 'pip install pre-commit'
     - run: 'pre-commit run --all'
     - run: 'git submodule update --init agnos-kernel-sdm845'
     - run: './tools/extract_tools.sh'
     - run: './build_kernel.sh'
+    - run: 'chmod u+x setup_python27.sh && sudo ./setup_python27.sh'
     - run: './build_system.sh'
