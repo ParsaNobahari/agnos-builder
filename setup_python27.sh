@@ -10,6 +10,4 @@ make
 make install
 cd ..
 
-update-alternatives --install /usr/bin/python python /usr/bin/python2.6 20
 update-alternatives --install /usr/bin/python python /usr/bin/python2.7 10
-update-alternatives --set python /usr/bin/python2.6
