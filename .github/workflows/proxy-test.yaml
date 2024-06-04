@@ -17,3 +17,5 @@ jobs:
     - run: "echo $https_proxy"
     - run: "echo $HTTP_PROXY"
     - run: "echo $HTTPS_PROXY"
+    - run: "echo $no_proxy"
+    - run: "echo $NO_PROXY"
