@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: easimon/maximize-build-space@v10
       with:
-          root-reserve-mb: 512
+          root-reserve-gb: 4
           swap-size-mb: 1024
           remove-dotnet: 'true'
     - uses: actions/checkout@v3
