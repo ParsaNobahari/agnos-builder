@@ -10,6 +10,10 @@ jobs:
     timeout-minutes: 150
     steps:
     - uses: easimon/maximize-build-space@v10
+      with:
+          root-reserve-mb: 512
+          swap-size-mb: 1024
+          remove-dotnet: 'true'
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v4
       with:
