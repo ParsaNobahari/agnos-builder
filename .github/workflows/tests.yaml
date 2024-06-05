@@ -11,10 +11,9 @@ jobs:
     steps:
     - uses: easimon/maximize-build-space@v10
     - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
+    - uses: actions/setup-python@v5.1.0
       with:
-        python-version: '2.7.18'
-        python-version: '3.11.4'
+        python-version: '2.7.18, 3.11.4'
     - run: 'pip install pre-commit'
     - run: 'pre-commit run --all'
     - run: 'git submodule update --init agnos-kernel-sdm845'
