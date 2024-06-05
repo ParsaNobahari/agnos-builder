@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 150
     steps:
+    - uses: easimon/maximize-build-space@v10
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v4
       with:
