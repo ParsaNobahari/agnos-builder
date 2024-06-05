@@ -7,13 +7,12 @@ jobs:
   precommit:
     name: pre-commit
     runs-on: ubuntu-latest
+    container:
+      image: python:2.7.18-buster
     timeout-minutes: 150
     steps:
     - uses: easimon/maximize-build-space@v10
     - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
-      with:
-        python-version: '2.7.18'
     - uses: actions/setup-python@v4
       with:
         python-version: '3.11.4'
