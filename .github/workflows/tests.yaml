@@ -23,6 +23,3 @@ jobs:
     - run: 'git submodule update --init agnos-kernel-sdm845'
     - run: './tools/extract_tools.sh'
     - run: 'chmod u+x setup_python27.sh && sudo ./setup_python27.sh'
-    - run: './build_kernel.sh'
-    - run: 'export http_proxy="" && export https_proxy="" && export HTTP_PROXY="" && export HTTPS_PROXY="" && export no_proxy="gitlab.com" export NO_PROXY="gitlab.com"'
-    - run: 'sudo ./build_system.sh'
