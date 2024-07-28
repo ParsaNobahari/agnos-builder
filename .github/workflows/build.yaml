@@ -17,7 +17,7 @@ jobs:
   build:
     name: build kernel and system
     runs-on: self-hosted
-    timeout-minutes: 60
+    timeout-minutes: 21600
     steps:
     - uses: actions/checkout@v4
       with:
