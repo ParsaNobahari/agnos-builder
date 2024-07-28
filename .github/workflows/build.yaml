@@ -2,7 +2,7 @@ name: build
 
 on:
   push:
-    branches: [ master ]
+    branches: [ issue-openpilot-30894 ]
   pull_request:
   workflow_dispatch:
 
