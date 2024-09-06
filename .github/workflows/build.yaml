@@ -47,6 +47,14 @@ jobs:
         key: kernel-${{ steps.kernel-submodule.outputs.ref }}
         restore-keys: kernel-
 
+    - name: Cache Primes
+      id: cache-primes
+      uses: actions/cache@v4
+      with:
+        path: prime-numbers
+        key: ${{ runner.os }}-primes
+
+
     - name: Build kernel
       run: ./build_kernel.sh
 
@@ -56,7 +64,7 @@ jobs:
         echo -n ${{ github.event.pull_request.head.sha }} > VERSION
 
     - name: Build system
-      run: ./build_system.sh
+      run: ./build_system.sh -d prime-numbers
 
     - name: Statistics
       id: stats
