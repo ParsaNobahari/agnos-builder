@@ -24,7 +24,7 @@ jobs:
 
     - name: custom git clean
       run: |
-          git clean -ffdx --exclude={ 'tools/SecImage/', 'tools/aarch64-linux-android-4.9/', 'tools/aarch64-linux-gnu-gcc/', 'tools/llvm-arm-toolchain-ship/', 'ubuntu-base-24.04.1-base-arm64.tar.gz' } && git reset --hard HEAD
+          git clean -ffdx -e tools/SecImage/ -e tools/aarch64-linux-android-4.9/ -e tools/aarch64-linux-gnu-gcc/ -e tools/llvm-arm-toolchain-ship/ -e ubuntu-base-24.04.1-base-arm64.tar.gz && git reset --hard HEAD
 
     - name: Get commit message
       run: |
