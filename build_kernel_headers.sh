@@ -12,10 +12,10 @@ BOOT_IMG=./boot.img
 cd $DIR
 
 # Clone kernel if not done already
-if [ ! -d agnos-kernel-sdm845 ]; then
-  git submodule init agnos-kernel-sdm845
+if [ ! -d mainline-kernel ]; then
+  git submodule init mainline-kernel
 fi
-cd agnos-kernel-sdm845
+cd mainline-kernel
 
 # Build parameters
 export ARCH=arm64

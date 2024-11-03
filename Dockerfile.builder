@@ -14,6 +14,8 @@ RUN apt-get update && \
     build-essential \
     libssl-dev \
     bc \
+    bison \
+    flex \
     python-is-python2 \
     openssl \
     ccache \
