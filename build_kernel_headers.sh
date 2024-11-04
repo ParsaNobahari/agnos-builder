@@ -12,10 +12,10 @@ BOOT_IMG=./boot.img
 cd $DIR
 
 # Clone kernel if not done already
-if [ ! -d mainline-kernel ]; then
-  git submodule init mainline-kernel
+if [ ! -d kernel ]; then
+  git submodule init kernel
 fi
-cd mainline-kernel
+cd kernel
 
 # Build parameters
 export ARCH=arm64

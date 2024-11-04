@@ -4,3 +4,6 @@
 [submodule "mainline-kernel"]
 	path = mainline-kernel
 	url = https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+[submodule "linux"]
+	path = linux
+	url = https://github.com/torvalds/linux.git

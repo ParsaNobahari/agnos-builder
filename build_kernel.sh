@@ -37,15 +37,15 @@ trap "echo \"Cleaning up container:\"; \
 docker container rm -f $CONTAINER_ID" EXIT
 
 # Clone kernel if not done already
-if git submodule status --cached mainline-kernel/ | grep "^-"; then
-  echo "Cloning mainline-kernel"
-  git submodule update --init mainline-kernel
+if git submodule status --cached kernel/ | grep "^-"; then
+  echo "Cloning kernel"
+  git submodule update --init kernel
 fi
 
 $DIR/tools/extract_tools.sh
 
 build_kernel() {
-  cd mainline-kernel
+  cd kernel
 
   # Build parameters
   ARCH=$(uname -m)
@@ -80,7 +80,7 @@ build_kernel() {
   # Copy over Image.gz-dtb
   mkdir -p $TMP_DIR
   cd $TMP_DIR
-  cp $DIR/mainline-kernel/out/arch/arm64/boot/Image.gz-dtb .
+  cp $DIR/kernel/out/arch/arm64/boot/Image.gz-dtb .
 
   # Make boot image
   $TOOLS/mkbootimg \
@@ -104,9 +104,9 @@ build_kernel() {
   # Copy to output dir
   mkdir -p $OUTPUT_DIR
   mv $BOOT_IMG $OUTPUT_DIR/
-  cp $DIR/mainline-kernel/out/techpack/audio/asoc/snd-soc-sdm845.ko $OUTPUT_DIR/
-  cp $DIR/mainline-kernel/out/techpack/audio/asoc/codecs/snd-soc-wcd9xxx.ko $OUTPUT_DIR/
-  cp $DIR/mainline-kernel/out/drivers/staging/qcacld-3.0/wlan.ko $OUTPUT_DIR/
+  cp $DIR/kernel/out/techpack/audio/asoc/snd-soc-sdm845.ko $OUTPUT_DIR/
+  cp $DIR/kernel/out/techpack/audio/asoc/codecs/snd-soc-wcd9xxx.ko $OUTPUT_DIR/
+  cp $DIR/kernel/out/drivers/staging/qcacld-3.0/wlan.ko $OUTPUT_DIR/
 }
 
 # Run build_kernel in container
