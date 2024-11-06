@@ -17,7 +17,7 @@ Run once to set things up:
 git clone https://github.com/commaai/agnos-builder.git
 
 cd agnos-builder
-git submodule update --init kernel
+git submodule update --init linux
 ./tools/extract_tools.sh
 ```
 
