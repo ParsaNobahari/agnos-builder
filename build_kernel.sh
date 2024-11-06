@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-DEFCONFIG=tici_defconfig
+DEFCONFIG=./kernel_configs/tici_defconfig
 
 # Get directories and make sure we're in the correct spot to start the build
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
