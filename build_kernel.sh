@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-cp -r ./kernel_configs/* ./linux/arch/arm64/configs/
-
-DEFCONFIG=tici_defconfig
+DEFCONFIG=defconfig
 
 # Get directories and make sure we're in the correct spot to start the build
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
