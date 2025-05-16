@@ -4,7 +4,7 @@ echo "installing uv..."
 
 export XDG_DATA_HOME="/usr/local"
 
-curl -LsSf https://astral.sh/uv/install.sh | sh
+./uv-installer.sh
 
 PYTHON_VERSION="3.12"
 

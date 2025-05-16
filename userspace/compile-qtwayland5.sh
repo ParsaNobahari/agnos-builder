@@ -5,7 +5,7 @@ VERSION=5.12.9
 # Install build requirements
 dpkg --add-architecture armhf
 
-apt-get update && apt-get install -yq --no-install-recommends \
+apt-fast install -yq --no-install-recommends \
     libc6:armhf \
     libdbus-1-3 \
     libegl-dev \
@@ -21,7 +21,7 @@ apt-get update && apt-get install -yq --no-install-recommends \
     libxkbcommon-dev \
     zlib1g-dev
 
-apt-get -o Dpkg::Options::="--force-overwrite" install -yq \
+apt-fast -o Dpkg::Options::="--force-overwrite" install -yq \
     /tmp/agnos/qt-5.12.8.deb \
     /tmp/agnos/libwayland-1.9.0-1.deb \
     /tmp/agnos/libicu66_66.1-2ubuntu2.1_arm64.deb \

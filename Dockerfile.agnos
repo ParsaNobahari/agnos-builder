@@ -1,13 +1,50 @@
 # check=error=true
 
 # ################## #
+# ###### Base ###### #
+# ################## #
+FROM scratch AS agnos-base
+
+# Add Ubuntu Base image files
+ARG UBUNTU_BASE_IMAGE
+ADD ${UBUNTU_BASE_IMAGE} /
+
+# Build folder
+RUN mkdir -p /tmp/agnos
+
+# Stop on error
+RUN set -xe
+
+ARG USERNAME=comma
+
+# Base system setup
+RUN echo "resolvconf resolvconf/linkify-resolvconf boolean false" | debconf-set-selections
+COPY ./userspace/base_setup.sh /tmp/agnos
+RUN /tmp/agnos/base_setup.sh
+
+# Install openpilot dependencies
+COPY ./userspace/openpilot_dependencies.sh /tmp/agnos/
+RUN /tmp/agnos/openpilot_dependencies.sh
+COPY ./userspace/openpilot_python_dependencies.sh /tmp/agnos/
+RUN /tmp/agnos/openpilot_python_dependencies.sh
+
+# Install old Qt 5.12.8, libwayland 1.9.0-1 and deps
+COPY ./userspace/qtwayland/*.deb /tmp/agnos/
+RUN apt-fast -o Dpkg::Options::="--force-overwrite" install -yq \
+    /tmp/agnos/qt-5.12.8.deb \
+    /tmp/agnos/libwayland-1.9.0-1.deb \
+    /tmp/agnos/libicu66_66.1-2ubuntu2.1_arm64.deb \
+    /tmp/agnos/libssl1.1_1.1.1f-1ubuntu2.22_arm64.deb \
+    /tmp/agnos/libffi6_3.2.1-8_arm64.deb
+
+# ################## #
 # ### Package  ##### #
 # ### Compilation ## #
 # ################## #
 FROM ubuntu:24.04 AS agnos-compiler
 
 # Common packages
-RUN apt-get update && apt-get install -yq --no-install-recommends \
+RUN apt-fast install -yq --no-install-recommends \
     build-essential \
     ca-certificates \
     ccache \
@@ -47,43 +84,6 @@ COPY ./userspace/qtwayland/patch* /tmp/agnos/
 RUN --mount=type=cache,target=/root/.ccache,id=qtwayland5,sharing=shared \
     /tmp/agnos/compile-qtwayland5.sh
 
-# ################## #
-# ###### Base ###### #
-# ################## #
-FROM scratch AS agnos-base
-
-# Add Ubuntu Base image files
-ARG UBUNTU_BASE_IMAGE
-ADD ${UBUNTU_BASE_IMAGE} /
-
-# Build folder
-RUN mkdir -p /tmp/agnos
-
-# Stop on error
-RUN set -xe
-
-ARG USERNAME=comma
-
-# Base system setup
-RUN echo "resolvconf resolvconf/linkify-resolvconf boolean false" | debconf-set-selections
-COPY ./userspace/base_setup.sh /tmp/agnos
-RUN /tmp/agnos/base_setup.sh
-
-# Install openpilot dependencies
-COPY ./userspace/openpilot_dependencies.sh /tmp/agnos/
-RUN /tmp/agnos/openpilot_dependencies.sh
-COPY ./userspace/openpilot_python_dependencies.sh /tmp/agnos/
-RUN /tmp/agnos/openpilot_python_dependencies.sh
-
-# Install old Qt 5.12.8, libwayland 1.9.0-1 and deps
-COPY ./userspace/qtwayland/*.deb /tmp/agnos/
-RUN apt-get -o Dpkg::Options::="--force-overwrite" install -yq \
-    /tmp/agnos/qt-5.12.8.deb \
-    /tmp/agnos/libwayland-1.9.0-1.deb \
-    /tmp/agnos/libicu66_66.1-2ubuntu2.1_arm64.deb \
-    /tmp/agnos/libssl1.1_1.1.1f-1ubuntu2.22_arm64.deb \
-    /tmp/agnos/libffi6_3.2.1-8_arm64.deb
-
 # ################### #
 # ###### AGNOS ###### #
 # ################### #
@@ -99,8 +99,7 @@ RUN mv /data/persist /system/ && rm -rf /data/*
 # Pre-compiled libqmi and modemmanager
 COPY --from=agnos-compiler-modemmanager /tmp/libqmi.deb /tmp/modemmanager.deb /tmp/
 RUN cd /tmp && \
-    apt-get update && \
-    apt-get install -yq --no-install-recommends \
+    apt-fast install -yq --no-install-recommends \
     python3 \
     python3-dev \
     gir1.2-qmi-1.0 \
@@ -115,16 +114,16 @@ RUN cd /tmp && \
     polkitd \
     polkitd-pkla \
     mobile-broadband-provider-info && \
-    apt-get -o Dpkg::Options::="--force-overwrite" install -yq ./libqmi.deb && \
-    apt-get -o Dpkg::Options::="--force-overwrite" install -yq ./modemmanager.deb
+    apt-fast -o Dpkg::Options::="--force-overwrite" install -yq ./libqmi.deb && \
+    apt-fast -o Dpkg::Options::="--force-overwrite" install -yq ./modemmanager.deb
 
 # Pre-compiled capnp (must be before python install)
 COPY --from=agnos-compiler-capnp /tmp/capnproto.deb /tmp/capnproto.deb
-RUN cd /tmp && apt-get -o Dpkg::Options::="--force-overwrite" install -yq ./capnproto.deb
+RUN cd /tmp && apt-fast -o Dpkg::Options::="--force-overwrite" install -yq ./capnproto.deb
 
 # Use other pre-compiled packages
 COPY --from=agnos-compiler-ffmpeg /tmp/ffmpeg.deb /tmp/ffmpeg.deb
-RUN cd /tmp && apt-get -o Dpkg::Options::="--force-overwrite" install -yq ./ffmpeg.deb
+RUN cd /tmp && apt-fast -o Dpkg::Options::="--force-overwrite" install -yq ./ffmpeg.deb
 
 ARG XDG_DATA_HOME="/usr/local"
 
@@ -140,7 +139,7 @@ COPY ./userspace/install_extras.sh /tmp/agnos/
 RUN /tmp/agnos/install_extras.sh
 
 COPY --from=agnos-compiler-qtwayland5 /tmp/qtwayland5.deb /tmp/qtwayland5.deb
-RUN cd /tmp && apt-get -o Dpkg::Options::="--force-overwrite" install -yq --allow-downgrades ./qtwayland5.deb
+RUN cd /tmp && apt-fast -o Dpkg::Options::="--force-overwrite" install -yq --allow-downgrades ./qtwayland5.deb
 
 # Patched libeglSubDriverWayland with fixed nullptr deref in CommitBuffer
 COPY ./userspace/files/libeglSubDriverWayland.so.patched /lib/aarch64-linux-gnu/libeglSubDriverWayland.so
@@ -257,4 +256,4 @@ RUN rm -rf /usr/share/icons/* && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /home/$USERNAME/.cache && \
     rm -rf /root/.cache && \
-    apt-get clean
+    apt-fast clean

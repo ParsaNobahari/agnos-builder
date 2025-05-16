@@ -3,7 +3,7 @@
 VERSION=1.0.2
 
 # Install build requirements
-apt-get update && apt-get install -yq --no-install-recommends \
+apt-fast install -yq --no-install-recommends \
     libc6-dev \
     libssl-dev \
     zlib1g-dev

@@ -12,9 +12,9 @@ touch /AGNOS
 dpkg --add-architecture armhf
 
 # Install apt-fast
-apt-get update
-apt-get install -yq curl sudo wget
-bash -c "$(curl -sL https://git.io/vokNn)"
+./apt_fast_installer.sh
+apt-fast update -yq
+apt-fast install -yq curl sudo wget
 
 # Install packages
 export DEBIAN_FRONTEND=noninteractive
@@ -50,7 +50,6 @@ echo "comma - nice -10" >> /etc/security/limits.conf
 locale-gen en_US.UTF-8
 update-locale LANG=en_US.UTF-8
 
-apt-fast upgrade -yq
 apt-fast install --no-install-recommends -yq \
     alsa-utils \
     apport-retrace \
@@ -125,7 +124,6 @@ echo "comma ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 ln -sf /bin/bash /bin/sh
 
 # Install necessary libs
-apt-fast update -yq
 apt-fast install --no-install-recommends -yq \
     libacl1:armhf \
     libasan6-armhf-cross \

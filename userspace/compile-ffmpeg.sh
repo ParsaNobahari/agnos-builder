@@ -3,7 +3,7 @@
 VERSION=4.2.2
 
 # Install build requirements
-apt-get update && apt-get install -yq --no-install-recommends \
+apt-fast install -yq --no-install-recommends \
     libass-dev \
     libfreetype6-dev \
     libgnutls28-dev \
@@ -22,8 +22,8 @@ apt-get update && apt-get install -yq --no-install-recommends \
     zlib1g-dev
 
 # Build ffmpeg (the one from the ubuntu repos doesn't work with our libOpenCL)
+cp ffmpeg-${VERSION}.tar.bz2 /tmp
 cd /tmp
-wget https://ffmpeg.org/releases/ffmpeg-${VERSION}.tar.bz2
 tar xvf ffmpeg-${VERSION}.tar.bz2
 cd ffmpeg-${VERSION}
 

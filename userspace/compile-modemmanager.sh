@@ -10,7 +10,7 @@ cd /tmp
 git clone https://github.com/keithbowes/meson-install.git
 
 # libqmi
-apt-get update && apt-get install -yq --no-install-recommends \
+apt-fast install -yq --no-install-recommends \
       bash-completion \
       gobject-introspection \
       gtk-doc-tools \
@@ -35,7 +35,7 @@ cd /tmp
 
 git clone -b $MM_VERSION --depth 1 https://gitlab.freedesktop.org/mobile-broadband/ModemManager.git
 
-apt-get install -y --no-install-recommends \
+apt-fast install -y --no-install-recommends \
       cmake \
       gettext \
       libdbus-1-dev \
